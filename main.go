@@ -21,18 +21,14 @@ func main() {
 
 	flag.Parse()
 
-	if help {
-		fmt.Println("mockdata -i <input file> -o <output file>")
+	if help || inputPath == "" || outputPath == ""{
+		printUsage()
 		os.Exit(0)
 	}
+}
 
-	if inputPath == "" {
-		fmt.Println("Please provide an input file")
-		os.Exit(1)
-	}
-
-	if outputPath == "" {
-		fmt.Println("Please provide an output file")
-		os.Exit(1)
-	}
+func printUsage() {
+	fmt.Println("Usage : mockdata [-i | --input] <input file> [-o | --output] <output file>")
+	fmt.Println("-i --input: JSON input file as a template")
+	fmt.Println("-o --output: JSON output file")
 }
