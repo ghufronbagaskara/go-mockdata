@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 
@@ -25,10 +27,53 @@ func main() {
 		printUsage()
 		os.Exit(0)
 	}
+
+	if err := validateInput(inputPath); err != nil {
+		fmt.Printf("Invalid input: %s \n", err)
+		os.Exit(0)
+	}
+	
+	if err := validateOutput(outputPath); err != nil {
+		fmt.Printf("Invalid output: %s \n", err)
+		os.Exit(0)
+	}
+
 }
+
+
 
 func printUsage() {
 	fmt.Println("Usage : mockdata [-i | --input] <input file> [-o | --output] <output file>")
 	fmt.Println("-i --input: JSON input file as a template")
 	fmt.Println("-o --output: JSON output file")
+}
+
+func validateInput(path string) error {
+	if _, err := os.Stat(path); os.IsNotExist(err){
+		return err
+	}
+	
+	return nil 
+}
+
+func validateOutput(path string) error {
+	if _, err := os.Stat(path); os.IsNotExist(err){
+		return nil
+	}
+	
+	confirmOverwrite()
+	return nil
+}
+
+func confirmOverwrite() {
+	fmt.Println("Output file already exists. Do you want to overwrite it? (y/n)") 
+	
+	reader := bufio.NewReader(os.Stdin)
+	response, _ := reader.ReadString('\n')
+	response = strings.ToLower(strings.TrimSpace(response))
+
+	if response != "y" && response != "yes" && response != "ya" {
+		fmt.Println("Exiting program")
+		os.Exit(0)
+	}
 }
