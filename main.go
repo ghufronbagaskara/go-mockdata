@@ -71,12 +71,10 @@ func main() {
 
 
 
-func printUsage() error {
+func printUsage() {
 	fmt.Println("Usage : mockdata [-i | --input] <input file> [-o | --output] <output file>")
 	fmt.Println("-i --input: JSON input file as a template")
 	fmt.Println("-o --output: JSON output file")
-
-	return nil
 }
 
 func validateInput(path string) error {
