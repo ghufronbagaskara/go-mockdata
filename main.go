@@ -47,8 +47,10 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Println(mapping)
-
+	if err := valydateType(mapping); err != nil{
+		fmt.Printf("Error validating data type: %s \n", err)
+		os.Exit(0)
+	}
 }
 
 
@@ -115,6 +117,24 @@ func readInput(path string, mapping *map[string]string) error {
 	
 	if err := json.Unmarshal(fileByte, &mapping); err != nil {
 		return err
+	}
+
+	
+	return nil
+}	
+
+func valydateType(mapping map[string]string) error {
+	supported := map[string]bool{
+		"name": true, 
+		"address": true, 
+		"date": true,
+		"phone": true,
+	}
+	
+	for _ , value := range mapping {
+		if !supported[value] {
+			return errors.New("Unsupported data type")
+		}
 	}
 
 	

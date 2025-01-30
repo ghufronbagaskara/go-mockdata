@@ -1,6 +1,6 @@
 {
-    "nama": "Ghufron",
-    "tanggalLahir": "12122012",
-    "alamat": "Kota Malang",
-    "telepon": "91230912399"
+    "nama": "name",
+    "tanggalLahir": "date",
+    "alamat": "address",
+    "telepon": "phone"
 }
