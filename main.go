@@ -49,7 +49,6 @@ func main() {
 		os.Exit(0)
 	}
 
-	fmt.Println(mapping)
 
 	if err := valydateType(mapping); err != nil{
 		fmt.Printf("Error validating data type: %s \n", err)
