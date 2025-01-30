@@ -9,6 +9,8 @@ import (
 	"io"
 	"os"
 	"strings"
+
+	"github.com/ghufronbagaskara/go-mockdata/data"
 )
 
 
@@ -46,6 +48,8 @@ func main() {
 		fmt.Printf("Read input error: %s \n", err)
 		os.Exit(0)
 	}
+
+	fmt.Println(mapping)
 
 	if err := valydateType(mapping); err != nil{
 		fmt.Printf("Error validating data type: %s \n", err)
@@ -136,21 +140,13 @@ func readInput(path string, mapping *map[string]string) error {
 	return nil
 }	
 
-func valydateType(mapping map[string]string) error {
-	supported := map[string]bool{
-		"name": true, 
-		"address": true, 
-		"date": true,
-		"phone": true,
-	}
-	
+func valydateType(mapping map[string]string) error {	
 	for _ , value := range mapping {
-		if !supported[value] {
+		if !data.Supported[value] {
 			return errors.New("Unsupported data type")
 		}
 	}
 
-	
 	return nil
 }
 
@@ -158,7 +154,7 @@ func generateOutput(mapping map[string]string) (map[string]any, error) {
 	result := make(map[string]any)
 
 	for key, dataType := range mapping {
-		result[key] = fmt.Sprintf("%s palsu", dataType)
+		result[key] = data.Generate(dataType)
 	}
 
 	return result, nil
